@@ -48,7 +48,7 @@ export function About() {
                       Bachelor of Engineering in Computer Science
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      R.M.K Engineering College (2023 – Present)
+                      R.M.K Engineering College (2024 – Present)
                     </p>
                   </div>
                 </div>
