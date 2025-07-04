@@ -27,8 +27,8 @@ export function Hero() {
             <div className="relative inline-block">
               <div className="w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-primary/20 shadow-glow">
                 <img 
-                  src={profileImage} 
-                  alt="Kamalesh V" 
+                  // src={profileImage} 
+                  // alt="Kamalesh V" 
                   className="w-full h-full object-cover"
                 />
               </div>
