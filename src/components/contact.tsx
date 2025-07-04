@@ -1,4 +1,5 @@
 import { useState } from "react"
+import emailjs from "@emailjs/browser"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -14,6 +15,7 @@ export function Contact() {
     email: "",
     message: ""
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -22,7 +24,7 @@ export function Contact() {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     // Simple form validation
@@ -35,14 +37,41 @@ export function Contact() {
       return
     }
 
-    // Simulate form submission
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. I'll get back to you soon!",
-    })
+    setIsSubmitting(true)
 
-    // Reset form
-    setFormData({ name: "", email: "", message: "" })
+    try {
+      // Initialize EmailJS with public key
+      emailjs.init("GInJt9p-87QwPgeLm")
+
+      // Send email using EmailJS
+      await emailjs.send(
+        "service_a9i412s", // Service ID
+        "template_69ru4bh", // Template ID
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_name: "Kamalesh V",
+        }
+      )
+
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for reaching out. I'll get back to you soon!",
+      })
+
+      // Reset form
+      setFormData({ name: "", email: "", message: "" })
+    } catch (error) {
+      console.error("EmailJS error:", error)
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again or contact me directly.",
+        variant: "destructive"
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const contactInfo = [
@@ -170,9 +199,10 @@ export function Contact() {
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                   <Send className="w-4 h-4 ml-2" />
                 </Button>
               </form>
