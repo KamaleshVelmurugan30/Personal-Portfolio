@@ -78,8 +78,8 @@ export function Contact() {
     {
       icon: Mail,
       label: "Email",
-      value: "kamaleshvelmurugan@gmail.com",
-      href: "mailto:kamaleshvelmurugan@gmail.com"
+      value: "kamaleshvelmurugan30@gmail.com",
+      href: "mailto:kamaleshvelmurugan30@gmail.com"
     },
     {
       icon: Linkedin,
